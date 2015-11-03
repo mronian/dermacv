@@ -14,7 +14,10 @@ def illu_Correct(filename):
     #filenamer=pathr+filename
     #filenamer="../"
     #print filenamer
+    print filename
+    
     original=cv2.imread(filename, cv2.IMREAD_UNCHANGED)
+    #print original.shape
     #cv2.namedWindow('Illumination Corrected Image')
     #cv2.namedWindow('Original')
     print "Correcting Illumination using Corner Points as Healthy Skin"
