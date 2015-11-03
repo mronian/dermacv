@@ -23,7 +23,7 @@ def upload(request):
             print IMAGE_PATH
             start.delay(IMAGE_PATH)
             print "DONE"
-            #return HttpResponseRedirect('/CancerDetect/')
+            return HttpResponse('image uploaded successfully')
         else:
             print form.errors
             return HttpResponse('image upload failed')
