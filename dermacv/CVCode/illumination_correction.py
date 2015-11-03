@@ -8,15 +8,15 @@ from sklearn.cross_validation import train_test_split
 from sklearn import linear_model
 from sklearn.metrics import mean_squared_error, accuracy_score
 #from matplotlib import pyplot as plt
+from django.conf import settings
 
 def illu_Correct(filename):
-    #pathr=settings.BASE_DIR+'/media/uploads/'
-    #filenamer=pathr+filename
+    pathr=settings.BASE_DIR+'/media/uploads/'
+    filenamer=pathr+filename
     #filenamer="../"
     #print filenamer
-    print filename
-    
-    original=cv2.imread(filename, cv2.IMREAD_UNCHANGED)
+    print filenamer
+    original=cv2.imread(filenamer, cv2.IMREAD_UNCHANGED)
     #print original.shape
     #cv2.namedWindow('Illumination Corrected Image')
     #cv2.namedWindow('Original')
@@ -145,7 +145,8 @@ def illu_Correct(filename):
     #cv2.imshow('Original', original)
     #cv2.imshow('Illumination Corrected Image', corrected_RGB)
     
-    cv2.imwrite("Corrected_Illumination.jpg", corrected_RGB)
+    pathr=settings.BASE_DIR+'/media/Pre_Process/'+filename
+    cv2.imwrite(pathr, corrected_RGB)
     
 
 if __name__ == "__main__":

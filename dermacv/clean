@@ -1,0 +1,3 @@
+rm ./media/uploads/*
+rm ./media/Pre_Process/*
+rm ./media/Segmented/*
