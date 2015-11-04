@@ -99,6 +99,7 @@ def illu_Correct(filename):
     clf.fit(a,b)
 
     c=clf.coef_
+    print c
 
     for i in range(height):
         for j in range(width):
