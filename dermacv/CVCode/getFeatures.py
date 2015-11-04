@@ -8,6 +8,9 @@ def getFeatures(filename):
     features = []
     
     features.extend(A.calculateFeatures)
+    features.extend(B.calculateFeatures)
+    features.extend(C.calculateFeatures)
+    features.extend(D.calculateFeatures)
     
     return features
 

@@ -15,6 +15,7 @@ def illu_Correct(filename):
     filenamer=pathr+filename
     #filenamer="../"
     #print filenamer
+    #filenamer=filename
     print filenamer
     original=cv2.imread(filenamer, cv2.IMREAD_UNCHANGED)
     #print original.shape
@@ -101,6 +102,8 @@ def illu_Correct(filename):
     c=clf.coef_
     print c
 
+    zimg=np.zeros((height, width)).astype(float)
+    
     for i in range(height):
         for j in range(width):
             f=[]
@@ -111,19 +114,39 @@ def illu_Correct(filename):
             f.append(j)
             f.append(1)
             z=clf.predict(f)
+            zimg.itemset((i,j), z)
+    
+    maxi=np.amax(zimg)
+    mini=np.amin(zimg)
+    #print maxi, mini
+    
+    #zimg-=mini
+    #zimg/=(maxi-mini)
+    #
+    #zimg=1-zimg
+    
+    for i in range(height):
+        for j in range(width):
             
-            v=v_norm[i,j]/z
+            v=float(v_norm[i,j])/zimg[i,j]
+            
             if v!=np.inf:
                 v_norm.itemset((i,j), v)
     
     maxi=np.amax(v_norm)
     mini=np.amin(v_norm)
-    
+    #print maxi, mini
     v_norm-=mini
     v_norm/=(maxi-mini)
     v_norm*=255
-
+    #print v_norm
+    #print zimg
+    #zimg*=255
+    #zimg=255-zimg
     v_norm=v_norm.astype(np.uint8)
+    
+
+    zimg=zimg.astype(np.uint8)
     #
     #hist=[0]*256
     #
@@ -141,12 +164,13 @@ def illu_Correct(filename):
     
     hsv[:,:,2]=v_norm
     
-    
     corrected_RGB=cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
     #cv2.imshow('Original', original)
+    #cv2.imshow('NORM',zimg)
     #cv2.imshow('Illumination Corrected Image', corrected_RGB)
-    
+    #cv2.waitKey()
     pathr=settings.BASE_DIR+'/media/Pre_Process/'+filename
+    #pathr='lol.jpg'
     cv2.imwrite(pathr, corrected_RGB)
     
 
