@@ -9,7 +9,6 @@ def calculateFeatures(filename):
     
     mask_path=filename+'_contour.png'
     image_path=filename+'_orig.jpg'
-    print image_path, mask_path
     
     original=cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
     mask=cv2.imread(mask_path, cv2.IMREAD_UNCHANGED)

@@ -6,13 +6,11 @@ def calculateFeatures(filename):
     
     mask_path=filename+'_contour.png'
     image_path=filename+'_orig.jpg'
-    print image_path, mask_path
     
     original=cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
     mask=cv2.imread(mask_path, cv2.IMREAD_UNCHANGED)
     mask2=mask.copy()
     contours,hierarchy = cv2.findContours(mask2, 1, 2)
-    
     features=[]
     
     cnt = contours[0]
@@ -28,10 +26,10 @@ def calculateFeatures(filename):
     I2=[]
     I3=[]
     features=[]
-    P1=[]
-    P2=[]
-    P3=[]
-    P4=[]
+    P1=[[0,0,0]]
+    P2=[[0,0,0]]
+    P3=[[0,0,0]]
+    P4=[[0,0,0]]
     counter=0
     original=original.astype(float)
     
@@ -54,7 +52,6 @@ def calculateFeatures(filename):
                     P3.append(original[i,j])
                 elif i<x and j<y :
                     P4.append(original[i,j])
-    
     P1AVG=np.average(P1, axis=0)
     P2AVG=np.average(P2, axis=0)
     P3AVG=np.average(P3, axis=0)

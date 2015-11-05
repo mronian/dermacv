@@ -6,6 +6,7 @@ def calculateFeatures(filename):
     
     filename=filename+'_orig.jpg'
     original=cv2.imread(filename, cv2.IMREAD_UNCHANGED)
+
     img=cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
     energy=0
     contrast=0
@@ -23,7 +24,7 @@ def calculateFeatures(filename):
             gl[img[i,j], img[i,j+1]]=gl[img[i,j], img[i,j+1]]+1
     
     gl=gl+gl.T            
-    gl=gl/np.sum(gl, axis=0)
+    gl=gl/np.amax(gl)
     
     
     for i in range(256):
