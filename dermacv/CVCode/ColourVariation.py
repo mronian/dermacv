@@ -2,6 +2,9 @@ import numpy as np
 import cv2
 import math
 
+def euclidD(A, B):
+    return math.sqrt(math.pow(A[0]-B[0],2)+math.pow(A[1]-B[1],2)+math.pow(A[2]-B[2],2))
+
 def calculateFeatures(filename):
     
     mask_path=filename+'_contour.png'
@@ -11,12 +14,29 @@ def calculateFeatures(filename):
     original=cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
     mask=cv2.imread(mask_path, cv2.IMREAD_UNCHANGED)
     features=[]
-    
+    mask2=mask.copy()
+    contours,hierarchy = cv2.findContours(mask2, 1, 2)
+    cnt = contours[0]
+    area=cv2.contourArea(cnt)
     I1=[]
     I2=[]
     I3=[]
     features=[]
     counter=0
+    White=0
+    Black=0
+    LightBrown=0
+    Red=0
+    DarkBrown=0
+    BlueGray=0
+    
+    W=[1.0,1.0,1.0]
+    B=[0.0,0.0,0.0]
+    R=[0.2,0.2,0.8]
+    LB=[0.0,0.4,0.6]
+    DB=[0.0,0.0,0.2]
+    BG=[0.6,0.6,0.2]
+    
     original=original.astype(float)
     
     maxi=np.max(original)
@@ -30,7 +50,25 @@ def calculateFeatures(filename):
                 I1.append(original[i,j,0])
                 I2.append(original[i,j,1])
                 I3.append(original[i,j,2])
-    
+                dist_W=euclidD(W,original[i,j])
+                dist_R=euclidD(R,original[i,j])
+                dist_LB=euclidD(LB,original[i,j])
+                dist_DB=euclidD(DB,original[i,j])
+                dist_BG=euclidD(BG,original[i,j])
+                dist_B=euclidD(B,original[i,j])
+                mini=np.amin((dist_W, dist_B, dist_LB, dist_DB, dist_BG, dist_R))
+                if mini==dist_W:
+                    White=White+1
+                elif mini==dist_R:
+                    Red=Red+1
+                elif mini==dist_LB:
+                    LightBrown=LightBrown+1
+                elif mini==dist_DB:
+                    DarkBrown=DarkBrown+1
+                elif mini==dist_BG:
+                    BlueGray=BlueGray+1
+                elif mini==dist_B:
+                    Black=Black+1
     
     f24_max_all = np.max((I1,I2,I3))
     f25_min_all = np.min((I1,I2,I3))
@@ -51,6 +89,12 @@ def calculateFeatures(filename):
     f40_ratio12=float(f34_mean1)/f35_mean2
     f41_ratio13=float(f34_mean1)/f36_mean3
     f42_ratio23=float(f35_mean2)/f36_mean3
+    f43_W=float(White)/area
+    f44_R=float(Red)/area
+    f45_LB=float(LightBrown)/area
+    f46_DB=float(DarkBrown)/area
+    f47_BG=float(BlueGray)/area
+    f48_B=float(Black)/area
     
     features.append(f24_max_all)
     features.append(f25_min_all)
@@ -71,6 +115,12 @@ def calculateFeatures(filename):
     features.append(f40_ratio12)
     features.append(f41_ratio13)
     features.append(f42_ratio23)
+    features.append(f43_W)
+    features.append(f44_R)
+    features.append(f45_LB)
+    features.append(f46_DB)
+    features.append(f47_BG)
+    features.append(f48_B)
     
     return features
 
