@@ -2,8 +2,6 @@ import numpy as np
 import cv2
 import math
 
-
-
 def calculateFeatures(filename):
     
     mask_path=filename+'_contour.png'
@@ -48,7 +46,6 @@ def calculateFeatures(filename):
                 I1.append(original[i,j,0])
                 I2.append(original[i,j,1])
                 I3.append(original[i,j,2])
-                counter=counter+1
                 if i>x and j>y :
                     P1.append(original[i,j])
                 elif i>x and j<y :
