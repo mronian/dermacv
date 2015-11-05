@@ -4,6 +4,7 @@ import math
 
 def calculateFeatures(filename):
     
+    filename=filename+'_orig.jpg'
     original=cv2.imread(filename, cv2.IMREAD_UNCHANGED)
     img=cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
     energy=0

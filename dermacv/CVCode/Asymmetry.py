@@ -18,6 +18,7 @@ def calcB(img, x, y, angle):
 
 def calculateFeatures(filename):
     
+    filename=filename+'_contour.png'
     original=cv2.imread(filename, cv2.IMREAD_UNCHANGED)
     
     ret,thresh = cv2.threshold(original,127,255,0)

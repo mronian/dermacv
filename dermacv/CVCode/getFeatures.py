@@ -7,10 +7,10 @@ def getFeatures(filename):
     
     features = []
     
-    features.extend(A.calculateFeatures)
-    features.extend(B.calculateFeatures)
-    features.extend(C.calculateFeatures)
-    features.extend(D.calculateFeatures)
+    features.extend(A.calculateFeatures(filename))
+    features.extend(B.calculateFeatures(filename))
+    features.extend(C.calculateFeatures(filename))
+    features.extend(D.calculateFeatures(filename))
     
     return features
 
